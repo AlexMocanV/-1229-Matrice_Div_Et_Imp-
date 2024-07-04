@@ -1,0 +1,40 @@
+#include <fstream>
+#include <cmath>
+std::string nume="matrice_div_et_imp";
+std::ifstream fin(nume+".in");
+std::ofstream fout(nume+".out");
+int a[513][513];
+void verif(int l1, int c1,int l2,int c2)
+{
+    if(l1==l2&&c2==c1)
+    {
+        fout<<a[l1][c2]<<' ';
+    }
+    else if(c1<c2&&l1<l2)
+    {
+        int lm=(l1+l2)/2;
+        int cm=(c1+c2)/2;
+        verif(l1,c1,lm,cm);
+        verif(lm+1,cm+1,l2,c2);
+        verif(l1,cm+1,lm,c2);
+        verif(lm+1,c1,l2,cm);
+    }
+}
+int main()
+{
+    int n,m,s=0;
+    fin>>n;
+    for(int i=1;i<=pow(2,n);i++)
+        for(int j=1;j<=pow(2,n);j++)
+            fin>>a[i][j];
+    
+    verif(1,1,pow(2,n),pow(2,n));
+    return 0;
+}
+/* pt rezolvare
+    pe un patrat 2 pe 2 
+    a b
+    c d
+    ordinea e a ->d ->b->c
+    dupa aceea trece in patratul din dreapta jos de 2 pe 2 ,iar apoi pe cel din dreapta sus iar apoi stanga jos 
+*/
